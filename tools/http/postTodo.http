@@ -1,0 +1,8 @@
+POST http://localhost:3000/v1/todos
+Content-Type: application/json
+
+{
+  "userId": "fe8c0c81-b704-49fd-9fcc-798b6c139a47",
+  "title": "Lorem Ipsum...",
+  "isCompleted": false
+}
