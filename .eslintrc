@@ -1,0 +1,11 @@
+{
+  "extends": ["@blastorg/eslint-config-blast/ts-config"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".ts", ".d.ts"]
+      }
+    }
+  },
+  "ignorePatterns": ["cdk.out/**/*"]
+}

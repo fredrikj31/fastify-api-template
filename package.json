@@ -4,9 +4,30 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --passWithNoTests",
+    "lint": "eslint . --ext .ts",
+    "start": "tsx watch ./src/server/index.ts | pino-pretty",
+    "build": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cors": "^8.3.0",
+    "@fastify/swagger": "^8.8.0",
+    "@fastify/swagger-ui": "^1.9.3",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.21.0",
+    "fastify-type-provider-zod": "^1.1.9",
+    "pino": "^8.15.0",
+    "typescript": "^5.1.6",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@tsconfig/node18": "^18.2.0",
+    "@types/node": "^20.4.6",
+    "pino-pretty": "^10.2.0",
+    "prettier": "^3.0.1",
+    "tsx": "^3.12.7"
+  }
 }
