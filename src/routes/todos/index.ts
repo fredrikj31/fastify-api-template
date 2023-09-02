@@ -56,4 +56,35 @@ export const todos: FastifyPluginAsync = async (fastify) => {
       return res.status(200).send(selectedTodo);
     }
   );
+
+  app.post(
+    "/",
+    {
+      schema: {
+        body: z.object({
+          userId: z.string().uuid(),
+          title: z.string(),
+          isCompleted: z.boolean(),
+        }),
+        response: {
+          "200": z.object({
+            id: z.number(),
+            userId: z.string().uuid(),
+            title: z.string(),
+            isCompleted: z.boolean(),
+          }),
+        },
+      },
+    },
+    async (req, res) => {
+      const newTodoId = todosData.length + 1;
+
+      return res.status(200).send({
+        id: newTodoId,
+        userId: req.body.userId,
+        title: req.body.title,
+        isCompleted: req.body.isCompleted,
+      });
+    }
+  );
 };
