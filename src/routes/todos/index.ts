@@ -16,6 +16,9 @@ export const todos: FastifyPluginAsync = async (fastify) => {
           "200": z.array(TodoSchema).describe("Returns a list of all todos"),
         },
         tags: ["todos"],
+        summary:
+          "Gets all todos which are currently available, returned in an array",
+        description: "Fetches all todos",
       },
     },
     async (_, res) => {
@@ -37,6 +40,8 @@ export const todos: FastifyPluginAsync = async (fastify) => {
           "200": TodoSchema.describe("Returns the specified todo"),
         },
         tags: ["todos"],
+        description: "Fetch single todo by id",
+        summary: "Gets specific todo by it's id, and returns the content of it",
       },
     },
     async (req, res) => {
@@ -66,6 +71,9 @@ export const todos: FastifyPluginAsync = async (fastify) => {
           "200": TodoSchema.describe("Returns the specified todo"),
         },
         tags: ["todos"],
+        description: "Creates a todo",
+        summary:
+          "Creates a todo with specific properties, it generates the id automatically",
       },
     },
     async (req, res) => {
@@ -95,6 +103,9 @@ export const todos: FastifyPluginAsync = async (fastify) => {
           ),
         },
         tags: ["todos"],
+        description: "Updates specific todo by id",
+        summary:
+          "Updates a todo by it's id, and only updates the specified properties",
       },
     },
     async (req, res) => {
@@ -131,6 +142,8 @@ export const todos: FastifyPluginAsync = async (fastify) => {
           "200": TodoSchema.describe("Returns the specified todo"),
         },
         tags: ["todos"],
+        description: "Deletes a single todo",
+        summary: "Deletes a single todo by specifying it's id",
       },
     },
     async (req, res) => {
