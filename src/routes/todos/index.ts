@@ -74,6 +74,7 @@ export const todos: FastifyPluginAsync = async (fastify) => {
             isCompleted: z.boolean(),
           }),
         },
+        tags: ["todos"],
       },
     },
     async (req, res) => {
