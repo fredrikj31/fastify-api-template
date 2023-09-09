@@ -1,0 +1,7 @@
+PATCH http://localhost:3000/v1/todos/1
+Content-Type: application/json
+
+{
+  "title": "Lorem Ipsum... Hello World 123",
+  "isCompleted": false
+}

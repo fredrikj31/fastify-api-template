@@ -88,4 +88,53 @@ export const todos: FastifyPluginAsync = async (fastify) => {
       });
     }
   );
+
+  app.patch(
+    "/:id",
+    {
+      schema: {
+        params: z.object({
+          id: z.string(),
+        }),
+        body: z
+          .object({
+            userId: z.string().uuid(),
+            title: z.string(),
+            isCompleted: z.boolean(),
+          })
+          .partial(),
+        response: {
+          "200": z.object({
+            id: z.number(),
+            userId: z.string().uuid(),
+            title: z.string(),
+            isCompleted: z.boolean(),
+          }),
+          "404": z.object({
+            code: z.string(),
+            message: z.string(),
+          }),
+        },
+        tags: ["todos"],
+      },
+    },
+    async (req, res) => {
+      const todoId = req.params.id;
+      const currentTodo = todosData.find(
+        (todo) => todo.id === parseInt(todoId)
+      );
+
+      if (!currentTodo) {
+        return res.status(404).send({
+          code: "todo-not-found",
+          message: "This specified todo was not found",
+        });
+      }
+
+      const updatedTodoVariables = req.body;
+      const updatedTodo = { ...currentTodo, ...updatedTodoVariables };
+
+      return res.status(200).send(updatedTodo);
+    }
+  );
 };
