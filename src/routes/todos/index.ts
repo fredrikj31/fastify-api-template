@@ -3,6 +3,7 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 import { TodoSchema } from "../../types/todo";
 import { todos as todosData } from "../../data/todos";
+import { ErrorSchema } from "../../types/error";
 
 export const todos: FastifyPluginAsync = async (fastify) => {
   const app = fastify.withTypeProvider<ZodTypeProvider>();
@@ -30,12 +31,9 @@ export const todos: FastifyPluginAsync = async (fastify) => {
           id: z.string().describe("Id of the todo you want to get"),
         }),
         response: {
-          "404": z
-            .object({
-              code: z.string(),
-              message: z.string(),
-            })
-            .describe("No todo with the specified id was found"),
+          "404": ErrorSchema.describe(
+            "No todo with the specified id was found"
+          ),
           "200": TodoSchema.describe("Returns the specified todo"),
         },
         tags: ["todos"],
@@ -61,18 +59,11 @@ export const todos: FastifyPluginAsync = async (fastify) => {
     "/",
     {
       schema: {
-        body: z.object({
-          userId: z.string().uuid(),
-          title: z.string(),
-          isCompleted: z.boolean(),
-        }),
+        body: TodoSchema.omit({ id: true }).describe(
+          "Returns the specified todo"
+        ),
         response: {
-          "200": z.object({
-            id: z.number(),
-            userId: z.string().uuid(),
-            title: z.string(),
-            isCompleted: z.boolean(),
-          }),
+          "200": TodoSchema.describe("Returns the specified todo"),
         },
         tags: ["todos"],
       },
@@ -96,24 +87,12 @@ export const todos: FastifyPluginAsync = async (fastify) => {
         params: z.object({
           id: z.string(),
         }),
-        body: z
-          .object({
-            userId: z.string().uuid(),
-            title: z.string(),
-            isCompleted: z.boolean(),
-          })
-          .partial(),
+        body: TodoSchema.partial().describe("Returns the specified todo"),
         response: {
-          "200": z.object({
-            id: z.number(),
-            userId: z.string().uuid(),
-            title: z.string(),
-            isCompleted: z.boolean(),
-          }),
-          "404": z.object({
-            code: z.string(),
-            message: z.string(),
-          }),
+          "200": TodoSchema.describe("Returns the specified todo"),
+          "404": ErrorSchema.describe(
+            "No todo with the specified id was found"
+          ),
         },
         tags: ["todos"],
       },
@@ -146,16 +125,10 @@ export const todos: FastifyPluginAsync = async (fastify) => {
           id: z.string(),
         }),
         response: {
-          "404": z.object({
-            code: z.string(),
-            message: z.string(),
-          }),
-          "200": z.object({
-            id: z.number(),
-            userId: z.string().uuid(),
-            title: z.string(),
-            isCompleted: z.boolean(),
-          }),
+          "404": ErrorSchema.describe(
+            "No todo with the specified id was found"
+          ),
+          "200": TodoSchema.describe("Returns the specified todo"),
         },
         tags: ["todos"],
       },
