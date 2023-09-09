@@ -137,4 +137,41 @@ export const todos: FastifyPluginAsync = async (fastify) => {
       return res.status(200).send(updatedTodo);
     }
   );
+
+  app.delete(
+    "/:id",
+    {
+      schema: {
+        params: z.object({
+          id: z.string(),
+        }),
+        response: {
+          "404": z.object({
+            code: z.string(),
+            message: z.string(),
+          }),
+          "200": z.object({
+            id: z.number(),
+            userId: z.string().uuid(),
+            title: z.string(),
+            isCompleted: z.boolean(),
+          }),
+        },
+        tags: ["todos"],
+      },
+    },
+    async (req, res) => {
+      const todoId = req.params.id;
+      const todo = todosData.find((todo) => todo.id === parseInt(todoId));
+
+      if (!todo) {
+        return res.status(404).send({
+          code: "todo-not-found",
+          message: "This specified todo was not found",
+        });
+      }
+
+      return res.status(200).send(todo);
+    }
+  );
 };
