@@ -21,7 +21,7 @@
     "fastify-type-provider-zod": "^1.1.9",
     "pino": "^8.15.0",
     "typescript": "^5.1.6",
-    "zod": "^3.21.4"
+    "zod": "^3.22.3"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.0",
